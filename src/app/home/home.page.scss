@@ -1,0 +1,23 @@
+.section-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ion-color-medium);
+    padding: 20px 16px 6px;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px 12px;
+
+    ion-input {
+        flex: 1;
+        border: 1px solid var(--ion-color-light-shade);
+        border-radius: 4px;
+        --padding-start: 10px;
+        --padding-end: 10px;
+        font-size: 14px;
+    }
+}

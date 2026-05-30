@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>FairPlate</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="section-label">Personas</div>
+
+    <div class="input-row">
+        <ion-input [(ngModel)]="newPersonName" placeholder="Nombre" (keydown.enter)="addPerson()"></ion-input>
+        <ion-button fill="outline" size="small" (click)="addPerson()">
+            Agregar
+        </ion-button>
+    </div>
+
+    <ion-list lines="full">
+        <ion-item *ngFor="let person of people">
+            <ion-label>{{ person.name }}</ion-label>
+            <ion-button fill="clear" slot="end" (click)="removePerson(person.id)">
+                <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>
