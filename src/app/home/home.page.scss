@@ -20,4 +20,49 @@
         --padding-end: 10px;
         font-size: 14px;
     }
+
+    .price-input {
+        flex: none;
+        width: 70px;
+    }
+}
+
+.item-card {
+    margin: 0 16px 10px;
+    border: 1px solid var(--ion-color-light-shade);
+    border-radius: 6px;
+    padding: 10px 12px;
+}
+
+.item-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+
+    .item-desc {
+        flex: 1;
+        font-size: 14px;
+    }
+
+    .item-price {
+        font-size: 14px;
+        color: var(--ion-color-medium);
+        margin-right: 4px;
+    }
+}
+
+.item-people {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 4px;
+
+    .person-check {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 13px;
+        color: var(--ion-color-dark);
+        cursor: pointer;
+    }
 }

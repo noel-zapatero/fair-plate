@@ -22,4 +22,39 @@
             </ion-button>
         </ion-item>
     </ion-list>
+
+    <div class="section-label">Items</div>
+    <div class="input-row">
+        <ion-input [(ngModel)]="newItemDescription" placeholder="Descripción" (keydown.enter)="addItem()"></ion-input>
+        <ion-input type="number" [(ngModel)]="newItemPrice" placeholder="$" class="price-input"
+            (keydown.enter)="addItem()"></ion-input>
+        <ion-button fill="outline" size="small" (click)="addItem()">
+            Agregar
+        </ion-button>
+    </div>
+
+    <div class="item-card" *ngFor="let item of items">
+        <div class="item-header">
+            <span class="item-desc">{{ item.description }}</span>
+            <span class="item-price">${{ item.price }}</span>
+            <ion-button fill="clear" size="small" (click)="removeItem(item.id)">
+                <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+        </div>
+        <div class="item-people" *ngIf="people.length > 0">
+            <label *ngFor="let person of people" class="person-check">
+                <input type="checkbox" [checked]="isAssigned(item, person.id)"
+                    (change)="toggleAssignment(item, person.id)" />
+                {{ person.name }}
+            </label>
+        </div>
+    </div>
+
+    <div class="section-label" *ngIf="people.length > 0">Subtotales</div>
+    <ion-list lines="none" *ngIf="people.length > 0">
+        <ion-item *ngFor="let person of people">
+            <ion-label>{{ person.name }}</ion-label>
+            <ion-note slot="end">${{ getSubtotalForPerson(person.id) | number:'1.2-2' }}</ion-note>
+        </ion-item>
+    </ion-list>
 </ion-content>
