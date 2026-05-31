@@ -66,3 +66,27 @@
         cursor: pointer;
     }
 }
+
+.tip-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 16px 8px;
+
+    input[type="range"] {
+        flex: 1;
+        accent-color: var(--ion-color-primary);
+    }
+
+    .tip-label {
+        font-size: 14px;
+        min-width: 36px;
+    }
+}
+
+.tip-hint {
+    font-size: 12px;
+    color: var(--ion-color-medium);
+    padding: 0 16px 8px;
+    margin: 0;
+}

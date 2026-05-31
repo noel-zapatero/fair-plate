@@ -50,11 +50,20 @@
         </div>
     </div>
 
-    <div class="section-label" *ngIf="people.length > 0">Subtotales</div>
+    <div class="section-label">Propina</div>
+    <div class="tip-row">
+        <input type="range" [(ngModel)]="tipPercent" min="0" max="30" step="1" />
+        <span class="tip-label">{{ tipPercent }}%</span>
+    </div>
+    <p class="tip-hint" *ngIf="tipPercent > 0">
+        +${{ getTotalBill() * tipPercent / 100 | number:'1.2-2' }} en total
+    </p>
+
+    <div class="section-label" *ngIf="people.length > 0">Totales</div>
     <ion-list lines="none" *ngIf="people.length > 0">
         <ion-item *ngFor="let person of people">
             <ion-label>{{ person.name }}</ion-label>
-            <ion-note slot="end">${{ getSubtotalForPerson(person.id) | number:'1.2-2' }}</ion-note>
+            <ion-note slot="end">${{ getTotalForPerson(person.id) | number:'1.2-2' }}</ion-note>
         </ion-item>
     </ion-list>
 </ion-content>

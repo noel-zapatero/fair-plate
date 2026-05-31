@@ -31,13 +31,15 @@ export class HomePage {
     nextPersonId = 1;
     nextItemId = 1;
 
+    tipPercent = 0;
+
     constructor() {
         addIcons({ closeOutline });
     }
 
     addPerson() {
         const name = this.newPersonName.trim();
-        if(!name){
+        if (!name) {
             return
         };
         this.people.push({ id: this.nextPersonId++, name });
@@ -51,7 +53,7 @@ export class HomePage {
     addItem() {
         const description = this.newItemDescription.trim();
         const price = this.newItemPrice;
-        if (!description || !price || price <= 0){
+        if (!description || !price || price <= 0) {
             return;
         }
 
@@ -91,11 +93,33 @@ export class HomePage {
         let total = 0;
         for (let i = 0; i < this.items.length; i++) {
             const item = this.items[i];
-            // bug: suma el precio completo en vez del share
             if (item.assignedTo.includes(personId)) {
-                total += item.price;
+                total += item.price / item.assignedTo.length;
             }
         }
         return total;
+    }
+
+    getTotalBill(): number {
+        let total = 0;
+        for (const item of this.items) {
+            total += item.price;
+        }
+        return total;
+    }
+
+    splitEvenly(): number {
+        const totalPeople = this.people.length;
+        if (totalPeople === 0){
+            return 0;
+        }
+        const tipAmount = this.getTotalBill() * (this.tipPercent / 100);
+        return tipAmount / totalPeople;
+    }
+
+    getTotalForPerson(personId: number): number {
+        const subtotal = this.getSubtotalForPerson(personId);
+        const tipShare = this.splitEvenly();
+        return subtotal + tipShare;
     }
 }
