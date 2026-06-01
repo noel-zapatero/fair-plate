@@ -1,18 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { closeOutline } from 'ionicons/icons';
-
-interface Person {
-    id: number;
-    name: string;
-}
-
-interface Item {
-    id: number;
-    description: string;
-    price: number;
-    assignedTo: number[];
-}
+import { SplitService, Item } from '../services/split.service';
 
 @Component({
     selector: 'app-home',
@@ -21,9 +11,6 @@ interface Item {
     standalone: false,
 })
 export class HomePage {
-    people: Person[] = [];
-    items: Item[] = [];
-
     newPersonName = '';
     newItemDescription = '';
     newItemPrice: number | null = null;
@@ -31,33 +18,37 @@ export class HomePage {
     nextPersonId = 1;
     nextItemId = 1;
 
-    tipPercent = 0;
+    get people() { return this.split.people; }
+    get items() { return this.split.items; }
+    get tipPercent() { return this.split.tipPercent; }
+    set tipPercent(v: number) { this.split.tipPercent = v; }
 
-    constructor() {
+    constructor(public split: SplitService,
+                private router: Router) {
         addIcons({ closeOutline });
     }
 
     addPerson() {
         const name = this.newPersonName.trim();
-        if (!name) {
-            return
-        };
-        this.people.push({ id: this.nextPersonId++, name });
+        if (!name){
+            return;
+        }
+        this.split.people.push({ id: this.nextPersonId++, name });
         this.newPersonName = '';
     }
 
     removePerson(id: number) {
-        this.people = this.people.filter(p => p.id !== id);
+        this.split.people = this.split.people.filter(p => p.id !== id);
     }
 
     addItem() {
         const description = this.newItemDescription.trim();
         const price = this.newItemPrice;
-        if (!description || !price || price <= 0) {
+        if (!description || !price || price <= 0){
             return;
         }
 
-        this.items.push({
+        this.split.items.push({
             id: this.nextItemId++,
             description,
             price,
@@ -69,7 +60,7 @@ export class HomePage {
     }
 
     removeItem(id: number) {
-        this.items = this.items.filter(i => i.id !== id);
+        this.split.items = this.split.items.filter(i => i.id !== id);
     }
 
     toggleAssignment(item: Item, personId: number) {
@@ -89,37 +80,19 @@ export class HomePage {
         return `${item.description} — $${item.price}`;
     }
 
-    getSubtotalForPerson(personId: number): number {
-        let total = 0;
-        for (let i = 0; i < this.items.length; i++) {
-            const item = this.items[i];
-            if (item.assignedTo.includes(personId)) {
-                total += item.price / item.assignedTo.length;
-            }
-        }
-        return total;
-    }
-
     getTotalBill(): number {
         let total = 0;
-        for (const item of this.items) {
+        for (const item of this.split.items) {
             total += item.price;
         }
         return total;
     }
 
-    splitEvenly(): number {
-        const totalPeople = this.people.length;
-        if (totalPeople === 0){
-            return 0;
-        }
-        const tipAmount = this.getTotalBill() * (this.tipPercent / 100);
-        return tipAmount / totalPeople;
+    canContinue(): boolean {
+        return this.split.people.length > 0 && this.split.items.length > 0;
     }
 
-    getTotalForPerson(personId: number): number {
-        const subtotal = this.getSubtotalForPerson(personId);
-        const tipShare = this.splitEvenly();
-        return subtotal + tipShare;
+    goToSummary() {
+        this.router.navigate(['/summary']);
     }
 }

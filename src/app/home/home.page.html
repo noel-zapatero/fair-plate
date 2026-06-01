@@ -6,14 +6,12 @@
 
 <ion-content>
     <div class="section-label">Personas</div>
-
     <div class="input-row">
         <ion-input [(ngModel)]="newPersonName" placeholder="Nombre" (keydown.enter)="addPerson()"></ion-input>
         <ion-button fill="outline" size="small" (click)="addPerson()">
             Agregar
         </ion-button>
     </div>
-
     <ion-list lines="full">
         <ion-item *ngFor="let person of people">
             <ion-label>{{ person.name }}</ion-label>
@@ -32,6 +30,10 @@
             Agregar
         </ion-button>
     </div>
+
+    <p class="hint" *ngIf="people.length === 0">
+        Agregá personas primero para asignar items.
+    </p>
 
     <div class="item-card" *ngFor="let item of items">
         <div class="item-header">
@@ -58,12 +60,12 @@
     <p class="tip-hint" *ngIf="tipPercent > 0">
         +${{ getTotalBill() * tipPercent / 100 | number:'1.2-2' }} en total
     </p>
-
-    <div class="section-label" *ngIf="people.length > 0">Totales</div>
-    <ion-list lines="none" *ngIf="people.length > 0">
-        <ion-item *ngFor="let person of people">
-            <ion-label>{{ person.name }}</ion-label>
-            <ion-note slot="end">${{ getTotalForPerson(person.id) | number:'1.2-2' }}</ion-note>
-        </ion-item>
-    </ion-list>
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-button expand="block" [disabled]="!canContinue()" (click)="goToSummary()" class="summary-btn">
+            Ver resumen
+        </ion-button>
+    </ion-toolbar>
+</ion-footer>

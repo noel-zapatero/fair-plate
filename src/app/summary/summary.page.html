@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home" text="Volver"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Resumen</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <div class="summary-list">
+        <div class="person-card" *ngFor="let person of split.people">
+            <div class="person-name">{{ person.name }}</div>
+            <div class="person-breakdown">
+                <span>subtotal: ${{ getSubtotalForPerson(person.id) | number:'1.2-2' }}</span>
+                <span *ngIf="split.tipPercent > 0">
+                    propina: ${{ getTipForPerson(person.id) | number:'1.2-2' }}
+                </span>
+            </div>
+            <div class="person-total">${{ getTotalForPerson(person.id) | number:'1.2-2' }}</div>
+        </div>
+    </div>
+
+    <div class="bill-footer">
+        <span>total: ${{ getTotalWithTip() | number:'1.2-2' }}</span>
+    </div>
+
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-button expand="block" fill="outline" (click)="reset()" class="reset-btn">
+            Nueva cuenta
+        </ion-button>
+    </ion-toolbar>
+</ion-footer>
