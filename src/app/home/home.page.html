@@ -5,66 +5,131 @@
 </ion-header>
 
 <ion-content>
-    <div class="section-label">Personas</div>
-    <div class="input-row">
-        <ion-input [(ngModel)]="newPersonName" placeholder="Nombre" (keydown.enter)="addPerson()"></ion-input>
-        <ion-button fill="outline" size="small" (click)="addPerson()">
-            Agregar
-        </ion-button>
-    </div>
-    <ion-list lines="full">
-        <ion-item *ngFor="let person of people">
-            <ion-label>{{ person.name }}</ion-label>
-            <ion-button fill="clear" slot="end" (click)="removePerson(person.id)">
-                <ion-icon name="close-outline"></ion-icon>
-            </ion-button>
-        </ion-item>
-    </ion-list>
+    <ng-container *ngIf="splitMode === null">
+        <div class="mode-screen">
+            <p class="mode-subtitle">¿Cómo querés dividir?</p>
+            <div class="mode-options">
+                <button class="mode-card" (click)="selectMode('even')">
+                    <span class="mode-icon">⚖️</span>
+                    <span class="mode-title">Partes iguales</span>
+                    <span class="mode-desc">Todos pagan lo mismo</span>
+                </button>
+                <button class="mode-card" (click)="selectMode('perplate')">
+                    <span class="mode-icon">🍽️</span>
+                    <span class="mode-title">Por consumo</span>
+                    <span class="mode-desc">Cada uno paga lo que pidió</span>
+                </button>
+            </div>
+        </div>
+    </ng-container>
 
-    <div class="section-label">Items</div>
-    <div class="input-row">
-        <ion-input [(ngModel)]="newItemDescription" placeholder="Descripción" (keydown.enter)="addItem()"></ion-input>
-        <ion-input type="number" [(ngModel)]="newItemPrice" placeholder="$" class="price-input"
-            (keydown.enter)="addItem()"></ion-input>
-        <ion-button fill="outline" size="small" (click)="addItem()">
-            Agregar
-        </ion-button>
-    </div>
+    <!-- Dividir igualitariamente -->
+    <ng-container *ngIf="splitMode === 'even'">
+        <div class="back-row">
+            <button class="back-btn" (click)="splitMode = null">← Volver</button>
+        </div>
 
-    <p class="hint" *ngIf="people.length === 0">
-        Agregá personas primero para asignar items.
-    </p>
+        <div class="section-label">Cuenta</div>
+        <div class="even-inputs">
+            <div class="even-field">
+                <label>Total de la cuenta </label>
+                <ion-input type="number" [(ngModel)]="evenTotal" placeholder="0.00"><div slot="start">$</div></ion-input>
+            </div>
+            <div class="even-field">
+                <label>Cantidad de personas</label>
+                <ion-input type="number" [(ngModel)]="evenPeople" placeholder="0"></ion-input>
+            </div>
+        </div>
 
-    <div class="item-card" *ngFor="let item of items">
-        <div class="item-header">
-            <span class="item-desc">{{ item.description }}</span>
-            <span class="item-price">${{ item.price }}</span>
-            <ion-button fill="clear" size="small" (click)="removeItem(item.id)">
-                <ion-icon name="close-outline"></ion-icon>
+        <div class="even-result" *ngIf="canContinueEven()">
+            <span class="even-share-label">Cada uno paga </span>
+            <span class="even-share-amount">${{ getEvenShare() | number:'1.2-2' }}</span>
+        </div>
+
+        <div class="tip-suggestions" *ngIf="canContinueEven()">
+            <div class="section-label">Propinas sugeridas</div>
+            <div class="tip-row-item" *ngFor="let tip of getTipSuggestions()">
+                <span class="tip-perc">{{ tip.percent }}%</span>
+                <span class="tip-total">${{ tip.tipTotal | number:'1.2-2' }} total</span>
+                <span class="tip-each">${{ tip.tipEach | number:'1.2-2' }} c/u</span>
+            </div>
+        </div>
+    </ng-container>
+
+    <!-- Dividir por plato -->
+    <ng-container *ngIf="splitMode === 'perplate'">
+        <div class="back-row">
+            <button class="back-btn" (click)="splitMode = null">← Volver</button>
+        </div>
+
+        <div class="section-label">Personas</div>
+        <div class="input-row">
+            <ion-input [(ngModel)]="newPersonName" placeholder="Nombre" (keydown.enter)="addPerson()"></ion-input>
+            <ion-button fill="outline" size="small" (click)="addPerson()">
+                Agregar
             </ion-button>
         </div>
-        <div class="item-people" *ngIf="people.length > 0">
-            <label *ngFor="let person of people" class="person-check">
-                <input type="checkbox" [checked]="isAssigned(item, person.id)"
-                    (change)="toggleAssignment(item, person.id)" />
-                {{ person.name }}
-            </label>
-        </div>
-    </div>
+        <ion-list lines="full">
+            <ion-item *ngFor="let person of people">
+                <ion-label>{{ person.name }}</ion-label>
+                <ion-button fill="clear" slot="end" (click)="removePerson(person.id)">
+                    <ion-icon name="close-outline"></ion-icon>
+                </ion-button>
+            </ion-item>
+        </ion-list>
 
-    <div class="section-label">Propina</div>
-    <div class="tip-row">
-        <input type="range" [(ngModel)]="tipPercent" min="0" max="30" step="1" />
-        <span class="tip-label">{{ tipPercent }}%</span>
-    </div>
-    <p class="tip-hint" *ngIf="tipPercent > 0">
-        +${{ getTotalBill() * tipPercent / 100 | number:'1.2-2' }} en total
-    </p>
+        <div class="section-label">Items</div>
+        <div class="input-row">
+            <ion-input [(ngModel)]="newItemDescription" placeholder="Descripción"
+                (keydown.enter)="addItem()"></ion-input>
+            <ion-input type="number" [(ngModel)]="newItemPrice" placeholder="$" class="price-input"
+                (keydown.enter)="addItem()"></ion-input>
+            <ion-button fill="outline" size="small" (click)="addItem()">
+                Agregar
+            </ion-button>
+        </div>
+
+        <p class="hint" *ngIf="people.length === 0">
+            Agregá personas primero para asignar items.
+        </p>
+
+        <div class="item-card" *ngFor="let item of items">
+            <div class="item-header">
+                <span class="item-desc">{{ item.description }}</span>
+                <span class="item-price">${{ item.price }}</span>
+                <ion-button fill="clear" size="small" (click)="removeItem(item.id)">
+                    <ion-icon name="close-outline"></ion-icon>
+                </ion-button>
+            </div>
+            <div class="item-people" *ngIf="people.length > 0">
+                <label *ngFor="let person of people" class="person-check">
+                    <input type="checkbox" [checked]="isAssigned(item, person.id)"
+                        (change)="toggleAssignment(item, person.id)" />
+                    {{ person.name }}
+                </label>
+            </div>
+        </div>
+
+        <div class="section-label">Propina</div>
+        <div class="tip-row">
+            <input type="range" [(ngModel)]="tipPercent" min="0" max="30" step="1" />
+            <span class="tip-label">{{ tipPercent }}%</span>
+        </div>
+        <p class="tip-hint" *ngIf="tipPercent > 0">
+            +${{ getTotalBill() * tipPercent / 100 | number:'1.2-2' }} en total
+        </p>
+    </ng-container>
+
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="splitMode !== null">
     <ion-toolbar>
-        <ion-button expand="block" [disabled]="!canContinue()" (click)="goToSummary()" class="summary-btn">
+        <ion-button expand="block" class="summary-btn" *ngIf="splitMode === 'even'" [disabled]="!canContinueEven()"
+            (click)="goToEvenSummary()">
+            Ver resumen
+        </ion-button>
+        <ion-button expand="block" class="summary-btn" *ngIf="splitMode === 'perplate'"
+            [disabled]="!canContinuePerPlate()" (click)="goToSummary()">
             Ver resumen
         </ion-button>
     </ion-toolbar>

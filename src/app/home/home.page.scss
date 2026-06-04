@@ -4,6 +4,7 @@
     letter-spacing: 0.07em;
     color: var(--ion-color-medium);
     padding: 20px 16px 6px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .input-row {
@@ -23,7 +24,7 @@
 
     .price-input {
         flex: none;
-        width: 70px;
+        width: 72px;
     }
 }
 
@@ -32,6 +33,7 @@
     border: 1px solid var(--ion-color-light-shade);
     border-radius: 6px;
     padding: 10px 12px;
+    background: var(--ion-color-light);
 }
 
 .item-header {
@@ -62,9 +64,15 @@
         align-items: center;
         gap: 5px;
         font-size: 13px;
-        color: var(--ion-color-dark);
         cursor: pointer;
     }
+}
+
+.hint {
+    font-size: 12px;
+    color: var(--ion-color-medium);
+    padding: 4px 16px 12px;
+    margin: 0;
 }
 
 .tip-row {
@@ -81,17 +89,21 @@
     .tip-label {
         font-size: 14px;
         min-width: 36px;
+        text-align: right;
     }
 }
 
 .tip-hint {
     font-size: 12px;
     color: var(--ion-color-medium);
-    padding: 0 16px 8px;
+    padding: 0 16px 16px;
     margin: 0;
 }
 
-.hint{
-    font-size: x-small;
-    padding-left: 10px;
+.summary-btn {
+    margin: 8px 16px;
+}
+
+.even-inputs, .even-result, .tip-suggestions{
+    padding: 10px;
 }
