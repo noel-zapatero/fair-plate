@@ -1,10 +1,123 @@
-.section-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: var(--ion-color-medium);
-    padding: 20px 16px 6px;
+ion-toolbar {
+    --background: #0f0f0f;
+    --color: #ffffff;
+}
+
+ion-content {
+    --background: #0f0f0f;
+}
+
+ion-footer ion-toolbar {
+    --background: #0f0f0f;
+    --border-color: #1f1f1f;
+}
+
+ion-list {
+    background: transparent;
+    --ion-item-background: transparent;
+}
+
+ion-item {
+    --background: transparent;
+    --color: #e0e0e0;
+    --border-color: #1f1f1f;
     font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+}
+
+.mode-screen {
+    padding: 40px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mode-subtitle {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    color: white;
+    letter-spacing: 0.05em;
+    margin-bottom: 28px;
+    text-transform: uppercase;
+}
+
+.mode-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+}
+
+.mode-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    padding: 20px 18px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: border-color 0.15s;
+
+    &:hover,
+    &:active {
+        border-color: white;
+    }
+
+    .mode-icon {
+        font-size: 22px;
+        margin-bottom: 6px;
+    }
+
+    .mode-title {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 14px;
+        color: #e0e0e0;
+        font-weight: normal;
+    }
+
+    .mode-desc {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 11px;
+        color: white;
+    }
+}
+
+.back-row {
+    padding: 14px 16px 0;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+
+    &:hover {
+        color: #999;
+    }
+}
+
+.section-label {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: white;
+    padding: 20px 16px 8px;
+}
+
+.hint {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    color: #3a3a3a;
+    padding: 4px 16px 12px;
+    margin: 0;
 }
 
 .input-row {
@@ -15,64 +128,170 @@
 
     ion-input {
         flex: 1;
-        border: 1px solid var(--ion-color-light-shade);
-        border-radius: 4px;
+        border: 1px solid #2a2a2a;
+        border-radius: 3px;
+        --background: #424242;
+        --color: #e0e0e0;
         --padding-start: 10px;
         --padding-end: 10px;
-        font-size: 14px;
+        --placeholder-color: #cacaca;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 13px;
+    }
+
+    ion-button {
+        --border-color: #2a2a2a;
+        --color: #888;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 11px;
+        text-transform: none;
+        letter-spacing: 0;
     }
 
     .price-input {
         flex: none;
-        width: 72px;
+        width: 100px;
+    }
+}
+
+.even-inputs {
+    padding: 0 16px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.even-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    label {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 11px;
+        color: white;
+    }
+
+    ion-input {
+        border: 1px solid #2a2a2a;
+        border-radius: 3px;
+        --background: #424242;
+        --color: #e0e0e0;
+        --padding-start: 10px;
+        --padding-end: 10px;
+        --placeholder-color: #cacaca;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 14px;
+    }
+}
+
+.even-result {
+    margin: 20px 16px 8px;
+    padding: 16px;
+    border: 1px solid #2a2a2a;
+    border-radius: 4px;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    .even-share-label {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 10px;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .even-share-amount {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 32px;
+        color: #ffffff;
+        font-weight: 300;
+    }
+}
+
+.tip-suggestions {
+    margin-bottom: 8px;
+}
+
+.tip-row-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-bottom: 1px solid #1a1a1a;
+    font-family: 'Courier New', Courier, monospace;
+
+    .tip-perc {
+        width: 36px;
+        font-size: 12px;
+        color: #33ff00;
+    }
+
+    .tip-total {
+        flex: 1;
+        font-size: 12px;
+        color: #888;
+    }
+
+    .tip-each {
+        font-size: 12px;
+        color: white;
     }
 }
 
 .item-card {
-    margin: 0 16px 10px;
-    border: 1px solid var(--ion-color-light-shade);
-    border-radius: 6px;
+    margin: 0 16px 8px;
+    border: 1px solid #2a2a2a;
+    border-radius: 4px;
     padding: 10px 12px;
-    background: var(--ion-color-light);
-}
+    background: #1a1a1a; // este background no tiene efecto si ion-item sobreescribe, quedó acá
 
-.item-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-
-    .item-desc {
-        flex: 1;
-        font-size: 14px;
-    }
-
-    .item-price {
-        font-size: 14px;
-        color: var(--ion-color-medium);
-        margin-right: 4px;
-    }
-}
-
-.item-people {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding-top: 4px;
-
-    .person-check {
+    .item-header {
         display: flex;
         align-items: center;
-        gap: 5px;
-        font-size: 13px;
-        cursor: pointer;
-    }
-}
+        margin-bottom: 8px;
 
-.hint {
-    font-size: 12px;
-    color: var(--ion-color-medium);
-    padding: 4px 16px 12px;
-    margin: 0;
+        .item-desc {
+            flex: 1;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            color: #e0e0e0;
+        }
+
+        .item-price {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            color: white;
+            margin-right: 4px;
+        }
+
+        ion-button {
+            --color: #3a3a3a;
+        }
+    }
+
+    .item-people {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding-top: 4px;
+
+        .person-check {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            color: #888;
+            cursor: pointer;
+
+            input[type="checkbox"] {
+                accent-color: #33ff00;
+            }
+        }
+    }
 }
 
 .tip-row {
@@ -83,27 +302,33 @@
 
     input[type="range"] {
         flex: 1;
-        accent-color: var(--ion-color-primary);
+        accent-color: #33ff00;
     }
 
     .tip-label {
-        font-size: 14px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 13px;
+        color: #888;
         min-width: 36px;
         text-align: right;
     }
 }
 
 .tip-hint {
-    font-size: 12px;
-    color: var(--ion-color-medium);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    color: white;
     padding: 0 16px 16px;
     margin: 0;
 }
 
 .summary-btn {
     margin: 8px 16px;
-}
-
-.even-inputs, .even-result, .tip-suggestions{
-    padding: 10px;
+    --background: #1a1a1a;
+    --border-color: #333;
+    --color: #e0e0e0;
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 13px;
 }

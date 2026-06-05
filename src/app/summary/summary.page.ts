@@ -17,6 +17,21 @@ export class SummaryPage {
         addIcons({ arrowBackOutline });
     }
 
+    // --- Even --- //
+    getEvenShare(): number {
+        if (this.split.evenPeople <= 0) return 0;
+        return this.split.evenTotal / this.split.evenPeople;
+    }
+
+    getEvenRows(): { index: number; amount: number }[] {
+        const rows = [];
+        for (let i = 0; i < this.split.evenPeople; i++) {
+            rows.push({ index: i + 1, amount: this.getEvenShare() });
+        }
+        return rows;
+    }
+
+    // --- Por plato --- //
     getSubtotalForPerson(personId: number): number {
         let total = 0;
         for (let i = 0; i < this.split.items.length; i++) {

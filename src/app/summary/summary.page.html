@@ -8,24 +8,41 @@
 </ion-header>
 
 <ion-content>
-
-    <div class="summary-list">
-        <div class="person-card" *ngFor="let person of split.people">
-            <div class="person-name">{{ person.name }}</div>
-            <div class="person-breakdown">
-                <span>subtotal: ${{ getSubtotalForPerson(person.id) | number:'1.2-2' }}</span>
-                <span *ngIf="split.tipPercent > 0">
-                    propina: ${{ getTipForPerson(person.id) | number:'1.2-2' }}
-                </span>
-            </div>
-            <div class="person-total">${{ getTotalForPerson(person.id) | number:'1.2-2' }}</div>
+    <!-- Even -->
+    <ng-container *ngIf="split.evenMode">
+        <div class="summary-header">
+            <span class="summary-total-label">Total de la cuenta </span>
+            <span class="summary-total-amount">${{ split.evenTotal | ars }}</span>
+            <span class="summary-people-label"> entre {{ split.evenPeople }} personas</span>
         </div>
-    </div>
 
-    <div class="bill-footer">
-        <span>total: ${{ getTotalWithTip() | number:'1.2-2' }}</span>
-    </div>
+        <div class="summary-list">
+            <div class="person-card" *ngFor="let row of getEvenRows()">
+                <div class="person-name">Persona {{ row.index }}</div>
+                <div class="person-total">${{ row.amount | ars }}</div>
+            </div>
+        </div>
+    </ng-container>
 
+    <!-- Por palto -->
+    <ng-container *ngIf="!split.evenMode">
+        <div class="summary-list">
+            <div class="person-card" *ngFor="let person of split.people">
+                <div class="person-name">{{ person.name }}</div>
+                <div class="person-breakdown">
+                    <span>subtotal: ${{ getSubtotalForPerson(person.id) | ars }}</span>
+                    <span *ngIf="split.tipPercent > 0">
+                        Propina: ${{ getTipForPerson(person.id) | ars }}
+                    </span>
+                </div>
+                <div class="person-total">${{ getTotalForPerson(person.id) | ars }}</div>
+            </div>
+        </div>
+
+        <div class="bill-footer">
+            <span>Total: ${{ getTotalWithTip() | ars }}</span>
+        </div>
+    </ng-container>
 </ion-content>
 
 <ion-footer>

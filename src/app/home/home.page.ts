@@ -26,7 +26,11 @@ export class HomePage {
     nextPersonId = 1;
     nextItemId = 1;
 
-    constructor(public split: SplitService, private router: Router) {
+    displayEvenTotal = '';
+    displayItemPrice = '';
+
+    constructor(public split: SplitService,
+        private router: Router) {
         addIcons({ closeOutline });
     }
 
@@ -73,6 +77,34 @@ export class HomePage {
         this.router.navigate(['/summary']);
     }
 
+    onEvenTotalInput(event: Event) {
+        const raw = (event.target as HTMLInputElement).value;
+        // sacar todo lo que no sea numero
+        const digitsOnly = raw.replace(/\D/g, '');
+        if (!digitsOnly) {
+            this.evenTotal = null;
+            this.displayEvenTotal = '';
+            return;
+        }
+        const num = parseInt(digitsOnly, 10);
+        this.evenTotal = num;
+        this.displayEvenTotal = num.toLocaleString('es-AR').replace(/,/g, '.');
+        // toLocaleString('es-AR') usa punto de miles por defecto, pero lo forzamos igual
+    }
+
+    onItemPriceInput(event: Event) {
+        const raw = (event.target as HTMLInputElement).value;
+        const digitsOnly = raw.replace(/\D/g, '');
+        if (!digitsOnly) {
+            this.newItemPrice = null;
+            this.displayItemPrice = '';
+            return;
+        }
+        const num = parseInt(digitsOnly, 10);
+        this.newItemPrice = num;
+        this.displayItemPrice = num.toLocaleString('es-AR').replace(/,/g, '.');
+    }
+
     // --- per plate logic ---
 
     addPerson() {
@@ -100,6 +132,7 @@ export class HomePage {
 
         this.newItemDescription = '';
         this.newItemPrice = null;
+        this.displayItemPrice = '';
     }
 
     removeItem(id: number) {

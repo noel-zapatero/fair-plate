@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { SummaryPageRoutingModule } from './summary-routing.module';
 
 import { SummaryPage } from './summary.page';
+import { ArsCurrencyPipe } from '../pipes/ars-currency.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SummaryPageRoutingModule
+    SummaryPageRoutingModule,
+    ArsCurrencyPipe
   ],
   declarations: [SummaryPage]
 })

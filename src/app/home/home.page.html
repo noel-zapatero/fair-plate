@@ -32,26 +32,26 @@
         <div class="section-label">Cuenta</div>
         <div class="even-inputs">
             <div class="even-field">
-                <label>Total de la cuenta </label>
-                <ion-input type="number" [(ngModel)]="evenTotal" placeholder="0.00"><div slot="start">$</div></ion-input>
-            </div>
-            <div class="even-field">
                 <label>Cantidad de personas</label>
                 <ion-input type="number" [(ngModel)]="evenPeople" placeholder="0"></ion-input>
+            </div>
+            <div class="even-field">
+                <label>Total de la cuenta </label>
+                <ion-input type="text" inputmode="numeric" [value]="displayEvenTotal" (ionInput)="onEvenTotalInput($event)" placeholder="0"><div slot="start">$</div></ion-input>
             </div>
         </div>
 
         <div class="even-result" *ngIf="canContinueEven()">
             <span class="even-share-label">Cada uno paga </span>
-            <span class="even-share-amount">${{ getEvenShare() | number:'1.2-2' }}</span>
+            <span class="even-share-amount">${{ getEvenShare() | ars }}</span>
         </div>
 
         <div class="tip-suggestions" *ngIf="canContinueEven()">
             <div class="section-label">Propinas sugeridas</div>
             <div class="tip-row-item" *ngFor="let tip of getTipSuggestions()">
                 <span class="tip-perc">{{ tip.percent }}%</span>
-                <span class="tip-total">${{ tip.tipTotal | number:'1.2-2' }} total</span>
-                <span class="tip-each">${{ tip.tipEach | number:'1.2-2' }} c/u</span>
+                <span class="tip-total">${{ tip.tipTotal | ars }} total</span>
+                <span class="tip-each">${{ tip.tipEach | ars }} c/u</span>
             </div>
         </div>
     </ng-container>
@@ -80,10 +80,8 @@
 
         <div class="section-label">Items</div>
         <div class="input-row">
-            <ion-input [(ngModel)]="newItemDescription" placeholder="Descripción"
-                (keydown.enter)="addItem()"></ion-input>
-            <ion-input type="number" [(ngModel)]="newItemPrice" placeholder="$" class="price-input"
-                (keydown.enter)="addItem()"></ion-input>
+            <ion-input [(ngModel)]="newItemDescription" placeholder="Descripción" (keydown.enter)="addItem()"></ion-input>
+            <ion-input type="text" inputmode="numeric" [value]="displayItemPrice" (ionInput)="onItemPriceInput($event)" placeholder="0" class="price-input" (keydown.enter)="addItem()"><div slot="start">$</div></ion-input>
             <ion-button fill="outline" size="small" (click)="addItem()">
                 Agregar
             </ion-button>
@@ -96,7 +94,7 @@
         <div class="item-card" *ngFor="let item of items">
             <div class="item-header">
                 <span class="item-desc">{{ item.description }}</span>
-                <span class="item-price">${{ item.price }}</span>
+                <span class="item-price">${{ item.price | ars}}</span>
                 <ion-button fill="clear" size="small" (click)="removeItem(item.id)">
                     <ion-icon name="close-outline"></ion-icon>
                 </ion-button>
@@ -116,7 +114,7 @@
             <span class="tip-label">{{ tipPercent }}%</span>
         </div>
         <p class="tip-hint" *ngIf="tipPercent > 0">
-            +${{ getTotalBill() * tipPercent / 100 | number:'1.2-2' }} en total
+            +${{ getTotalBill() * tipPercent / 100 | ars }} en total
         </p>
     </ng-container>
 
