@@ -28,6 +28,8 @@ log.txt
 /tmp
 /out-tsc
 /bazel-out
+www/
+
 
 # Node
 /node_modules
@@ -64,7 +66,13 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+.env
+*.local
 
 # System files
 .DS_Store
 Thumbs.db
+
+# Capacitor generated native projects
+android/
+ios/
